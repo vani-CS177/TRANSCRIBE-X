@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranscribeX - Authentication</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark);
+        }
+
+        .container {
+            display: flex;
+            max-width: 900px;
+            width: 90%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .login-left, .register-left {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-right, .register-right {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            margin-right: 15px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .features {
+            margin-top: 20px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .feature i {
+            margin-right: 10px;
+            color: var(--success);
+        }
+
+        .login-form h2, .register-form h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .login-form p, .register-form p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .input-with-icon input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember input {
+            margin-right: 8px;
+        }
+
+        .forgot {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn, .register-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover, .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .signup-link, .login-link {
+            text-align: center;
+            color: #666;
+        }
+
+        .signup-link a, .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-link a:hover, .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .terms input {
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+
+        .terms label {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Hide register form by default */
+        #registerContainer {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 95%;
+            }
+
+            .login-left, .login-right, .register-left, .register-right {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Login Container -->
+    <div class="container" id="loginContainer">
+        <div class="login-left">
+            <div class="logo">
+                <i class="fas fa-file-alt"></i>
+                <h1>TranscribeX</h1>
+            </div>
+            <p class="tagline">Transform your documents with AI-powered tools for academic and professional excellence.</p>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>IEEE Paper Formatting</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Smart PPT Generation</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>MCQ Generator</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span>AI Summary Creator</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <div class="login-form">
+                <h2>Welcome Back</h2>
+                <p>Sign in to access your TranscribeX dashboard</p>
+
+                <form action="/api/auth/login" method="POST" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <div class="remember">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="login-btn">Sign In</button>
+                </form>
+
+                <p class="signup-link">
+                    Don't have an account? <a href="#" id="showRegister">Sign up here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Container -->
+    <div class="container" id="registerContainer">
+        <div class="register-left">
+            <div class="logo">
+                <i class="fas fa-file-alt"></i>
+                <h1>TranscribeX</h1>
+            </div>
+            <p class="tagline">Join thousands of users transforming documents with AI-powered tools.</p>
+        </div>
+
+        <div class="register-right">
+            <div class="register-form">
+                <h2>Create Account</h2>
+                <p>Fill the details to sign up for TranscribeX</p>
+
+                <form action="/api/auth/register" method="POST" id="registerForm">
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="firstName" placeholder="Enter your first name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" name="lastName" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="password" placeholder="Create a password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" name="confirm_password" placeholder="Confirm your password" required>
+                        </div>
+                    </div>
+
+                    <div class="terms">
+                        <input type="checkbox" name="terms" required>
+                        <label>I agree to the <a href="#">Terms & Conditions</a></label>
+                    </div>
+
+                    <button type="submit" class="register-btn">Create Account</button>
+                </form>
+
+                <p class="login-link">
+                    Already have an account? <a href="#" id="showLogin">Login here</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between login and register forms
+        document.getElementById('showRegister').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'flex';
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('registerContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'flex';
+        });
+
+        // Login form submission
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const email = document.querySelector("#loginForm input[name='email']").value;
+            const password = document.querySelector("#loginForm input[name='password']").value;
+
+            // For demo purposes, we'll show an alert and then redirect
+            // In a real application, you would send this to your backend
+            alert(`Login attempted with:\nEmail: ${email}\nPassword: ${password}\n\nRedirecting to home page...`);
+            
+            // Redirect to home page after a short delay
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 1500);
+            
+            // Example of actual implementation:
+            /*
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                window.location.href = "/home";
+            } else {
+                alert(data.message);
+            }
+            */
+        });
+
+        // Register form submission
+        document.getElementById("registerForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const firstName = document.querySelector("#registerForm input[name='firstName']").value;
+            const lastName = document.querySelector("#registerForm input[name='lastName']").value;
+            const email = document.querySelector("#registerForm input[name='email']").value;
+            const password = document.querySelector("#registerForm input[name='password']").value;
+            const confirmPassword = document.querySelector("#registerForm input[name='confirm_password']").value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            // For demo purposes, we'll show an alert and then redirect
+            // In a real application, you would send this to your backend
+            alert(`Registration attempted with:\nName: ${firstName} ${lastName}\nEmail: ${email}\nPassword: ${password}\n\nRedirecting to home page...`);
+            
+            // Redirect to home page after a short delay
+            setTimeout(() => {
+                window.location.href = "home.html";
+            }, 1500);
+            
+            // Example of actual implementation:
+            /*
+            const res = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ firstName, lastName, email, password })
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+                alert("Registration successful! Please login.");
+                document.getElementById('showLogin').click();
+            } else {
+                alert(data.message);
+            }
+            */
+        });
+    </script>
+</body>
+</html>

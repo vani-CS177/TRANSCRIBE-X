@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TranscribeX - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #7209b7;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --card-1: #4361ee;
+            --card-2: #3a0ca3;
+            --card-3: #7209b7;
+            --card-4: #4cc9f0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        /* Back to Home Button */
+        .back-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 99;
+            transition: all 0.3s;
+        }
+
+        .back-home:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .back-home i {
+            font-size: 1.5rem;
+        }
+
+        /* Main Content Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .welcome-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Quick Access Button Styles */
+        .quick-access {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .quick-access button {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-access button:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            padding: 30px 25px 20px;
+            color: white;
+        }
+
+        .card-1 .card-header {
+            background: var(--card-1);
+        }
+
+        .card-2 .card-header {
+            background: var(--card-2);
+        }
+
+        .card-3 .card-header {
+            background: var(--card-3);
+        }
+
+        .card-4 .card-header {
+            background: var(--card-4);
+        }
+
+        .card-icon {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            flex-grow: 1;
+            font-size: 1.05rem;
+        }
+
+        .card-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .card-1 .card-btn {
+            border-color: var(--card-1);
+            color: var(--card-1);
+        }
+
+        .card-2 .card-btn {
+            border-color: var(--card-2);
+            color: var(--card-2);
+        }
+
+        .card-3 .card-btn {
+            border-color: var(--card-3);
+            color: var(--card-3);
+        }
+
+        .card-4 .card-btn {
+            border-color: var(--card-4);
+            color: var(--card-4);
+        }
+
+        .card-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .card-1 .card-btn:hover {
+            background: var(--card-1);
+        }
+
+        .card-2 .card-btn:hover {
+            background: var(--card-2);
+        }
+
+        .card-3 .card-btn:hover {
+            background: var(--card-3);
+        }
+
+        .card-4 .card-btn:hover {
+            background: var(--card-4);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 20px;
+            margin-top: 70px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--success);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .nav-links {
+                gap: 20px;
+            }
+            
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .welcome-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .quick-access {
+                gap: 15px;
+            }
+
+            .quick-access button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+                max-width: 500px;
+            }
+
+            .feature-card {
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .back-home {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-links a {
+                font-size: 0.85rem;
+                padding: 5px;
+            }
+            
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .welcome-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .quick-access {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .quick-access button {
+                width: 200px;
+            }
+
+            .back-home {
+                bottom: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+            }
+
+            .back-home i {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo" onclick="location.href='index.html'">
+                <i class="fas fa-file-alt"></i>
+                <h1>TranscribeX</h1>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="ieee-converter.html">IEEE Converter</a>
+                <a href="ppt-generator.html">PPT Generator</a>
+                <a href="mcq-generator.html">MCQ Generator</a>
+                <a href="summary-creator.html">Summary Creator</a>
+                <a href="#">My Documents</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>Welcome to TranscribeX!</h2>
+            <p>Transform your documents with AI-powered tools. Choose a feature below to get started.</p>
+        </section>
+
+        <!-- Quick Access Buttons -->
+        <div class="quick-access">
+            <button onclick="location.href='ieee.html'">IEEE Paper Converter</button>
+            <button onclick="location.href='ppt.html'">PPT Generator</button>
+            <button onclick="location.href='mcq.html'">MCQ Generator</button>
+            <button onclick="location.href='summary.html'">Summary Creator</button>
+        </div>
+
+        <!-- Features Grid - 2x2 Layout -->
+        <section class="features-grid">
+            <!-- Row 1 -->
+            <!-- IEEE Paper Converter -->
+            <div class="feature-card card-1">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3 class="card-title">IEEE Paper Converter</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Convert your research paper to IEEE format with proper citations, references, and layout. Ensure your paper meets all IEEE publication standards.</p>
+                    <a href="ieee-converter.html" class="card-btn">Use Tool</a>
+                </div>
+            </div>
+
+            <!-- PPT Generator -->
+            <div class="feature-card card-2">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-presentation-screen"></i>
+                    </div>
+                    <h3 class="card-title">PPT Generator</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Create professional presentations by choosing topic, slides count, and design templates. Perfect for academic and business presentations.</p>
+                    <a href="ppt-generator.html" class="card-btn">Use Tool</a>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <!-- MCQ Generator -->
+            <div class="feature-card card-3">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="card-title">MCQ Generator</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Generate multiple choice questions from your content for assessments and quizzes. Create tests quickly with AI-powered question generation.</p>
+                    <a href="mcq-generator.html" class="card-btn">Use Tool</a>
+                </div>
+            </div>
+
+            <!-- Summary Creator -->
+            <div class="feature-card card-4">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3 class="card-title">Summary Creator</h3>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Create concise summaries of long documents, articles, or research papers. Extract key points and main ideas automatically.</p>
+                    <a href="summary-creator.html" class="card-btn">Use Tool</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Back to Home Button -->
+    <div class="back-home" onclick="location.href='index.html'">
+        <i class="fas fa-home"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>TranscribeX</h3>
+                <p>AI-powered document transformation tools for academic and professional excellence.</p>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Features</h3>
+                <ul class="footer-links">
+                    <li><a href="ieee-converter.html">IEEE Paper Converter</a></li>
+                    <li><a href="ppt-generator.html">PPT Generator</a></li>
+                    <li><a href="mcq-generator.html">MCQ Generator</a></li>
+                    <li><a href="summary-creator.html">Summary Creator</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">API</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 TranscribeX. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Feature card click handlers
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if(!e.target.classList.contains('card-btn')) {
+                    const link = this.querySelector('.card-btn').getAttribute('href');
+                    // In a real application, you would navigate to the feature page
+                    alert(`Navigating to ${link}`);
+                    // window.location.href = link;
+                }
+            });
+        });
+
+        // Navigation link click handlers
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if(this.getAttribute('href') && this.getAttribute('href') !== '#') {
+                    // Remove active class from all links
+                    document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // In a real application, you would navigate to the page
+                    if(!this.getAttribute('href').startsWith('#')) {
+                        alert(`Navigating to ${this.textContent} page`);
+                        // window.location.href = this.getAttribute('href');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
