@@ -262,60 +262,9 @@
             font-size: 1.05rem;
         }
 
+        /* Remove card button styles since we're removing the buttons */
         .card-btn {
-            display: inline-block;
-            padding: 12px 25px;
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-align: center;
-            font-size: 1rem;
-        }
-
-        .card-1 .card-btn {
-            border-color: var(--card-1);
-            color: var(--card-1);
-        }
-
-        .card-2 .card-btn {
-            border-color: var(--card-2);
-            color: var(--card-2);
-        }
-
-        .card-3 .card-btn {
-            border-color: var(--card-3);
-            color: var(--card-3);
-        }
-
-        .card-4 .card-btn {
-            border-color: var(--card-4);
-            color: var(--card-4);
-        }
-
-        .card-btn:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .card-1 .card-btn:hover {
-            background: var(--card-1);
-        }
-
-        .card-2 .card-btn:hover {
-            background: var(--card-2);
-        }
-
-        .card-3 .card-btn:hover {
-            background: var(--card-3);
-        }
-
-        .card-4 .card-btn:hover {
-            background: var(--card-4);
+            display: none;
         }
 
         /* Footer Styles */
@@ -515,7 +464,6 @@
                 </div>
                 <div class="card-body">
                     <p class="card-description">Convert your research paper to IEEE format with proper citations, references, and layout. Ensure your paper meets all IEEE publication standards.</p>
-                    <a href="ieee-converter.html" class="card-btn">Use Tool</a>
                 </div>
             </div>
 
@@ -529,7 +477,6 @@
                 </div>
                 <div class="card-body">
                     <p class="card-description">Create professional presentations by choosing topic, slides count, and design templates. Perfect for academic and business presentations.</p>
-                    <a href="ppt-generator.html" class="card-btn">Use Tool</a>
                 </div>
             </div>
 
@@ -544,7 +491,6 @@
                 </div>
                 <div class="card-body">
                     <p class="card-description">Generate multiple choice questions from your content for assessments and quizzes. Create tests quickly with AI-powered question generation.</p>
-                    <a href="mcq-generator.html" class="card-btn">Use Tool</a>
                 </div>
             </div>
 
@@ -558,7 +504,6 @@
                 </div>
                 <div class="card-body">
                     <p class="card-description">Create concise summaries of long documents, articles, or research papers. Extract key points and main ideas automatically.</p>
-                    <a href="summary-creator.html" class="card-btn">Use Tool</a>
                 </div>
             </div>
         </section>
@@ -614,10 +559,28 @@
         // Feature card click handlers
         document.querySelectorAll('.feature-card').forEach(card => {
             card.addEventListener('click', function(e) {
-                if(!e.target.classList.contains('card-btn')) {
-                    const link = this.querySelector('.card-btn').getAttribute('href');
+                // Determine which card was clicked and navigate accordingly
+                const cardTitle = this.querySelector('.card-title').textContent;
+                let link = '';
+                
+                switch(cardTitle) {
+                    case 'IEEE Paper Converter':
+                        link = 'ieee-converter.html';
+                        break;
+                    case 'PPT Generator':
+                        link = 'ppt-generator.html';
+                        break;
+                    case 'MCQ Generator':
+                        link = 'mcq-generator.html';
+                        break;
+                    case 'Summary Creator':
+                        link = 'summary-creator.html';
+                        break;
+                }
+                
+                if(link) {
                     // In a real application, you would navigate to the feature page
-                    alert(`Navigating to ${link}`);
+                    alert(`Navigating to ${cardTitle} page`);
                     // window.location.href = link;
                 }
             });

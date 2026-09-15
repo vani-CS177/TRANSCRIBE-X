@@ -23,17 +23,16 @@ connectDB()
 
 // API Routes
 const authRoutes = require("./routes/userRoutes");
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes); // <-- IMPORTANT (login, register)
 
 // ------------------------------
-// ⭐ Serve Frontend (VERY IMPORTANT)
+// Serve Frontend
 // ------------------------------
-
-const frontendPath = path.join(__dirname, "frontend"); 
+const frontendPath = path.join(__dirname, "frontend");
 app.use(express.static(frontendPath));
 
-// Handle all other routes by sending index.html
-app.get("*", (req, res) => {
+// Serve index.html for any other route (Frontend Routing Support)
+app.get("/", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
@@ -41,8 +40,8 @@ app.get("*", (req, res) => {
 // Error Handlers
 // ------------------------------
 
-// 404 Handler
-app.use((req, res) => {
+// 404 Handler (for unmatched API routes)
+app.use("/api/*", (req, res) => {
   res.status(404).json({ message: "Route not found" });
 });
 
@@ -55,7 +54,6 @@ app.use((err, req, res, next) => {
 // ------------------------------
 // Start Server
 // ------------------------------
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} 🚀`);
